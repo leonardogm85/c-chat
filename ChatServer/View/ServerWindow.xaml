@@ -1,0 +1,87 @@
+﻿<Window x:Class="ChatServer.View.ServerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Chat Server"
+        Height="130"
+        Width="280"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        FocusManager.FocusedElement="{Binding ElementName=txtPort}"
+        Loaded="Window_Loaded"
+        Closing="Window_Closing">
+
+    <Grid
+        Margin="5">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Label
+            Grid.Row="0"
+            Grid.Column="0"
+            Content="Port:"></Label>
+
+        <TextBox
+                Grid.Row="0"
+                Grid.Column="1"
+                Name="txtPort"
+                Text="{Binding Port, UpdateSourceTrigger=PropertyChanged}"
+                VerticalAlignment="Center"
+                Padding="2"
+                PreviewTextInput="TxtPort_PreviewTextInput"
+                MaxLength="5"
+                IsEnabled="{Binding NotConnected}">
+            <Validation.ErrorTemplate>
+                <ControlTemplate>
+                    <StackPanel>
+                        <AdornedElementPlaceholder></AdornedElementPlaceholder>
+                        <TextBlock
+                            Text="{Binding [0].ErrorContent}"
+                            Foreground="Red"></TextBlock>
+                    </StackPanel>
+                </ControlTemplate>
+            </Validation.ErrorTemplate>
+        </TextBox>
+
+        <Grid
+            Grid.Row="1"
+            Grid.Column="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Button
+                Grid.Column="0"
+                Name="btnConnect"
+                Content="Connect"
+                Height="30"
+                Margin="0,20,5,0"
+                Command="{Binding ConnectCommand}"
+                IsEnabled="{Binding CanConnect}"></Button>
+
+            <Button
+                Grid.Column="1"
+                Name="btnDisconnect"
+                Content="Disconnect"
+                Height="30"
+                Margin="5,20,0,0"
+                Command="{Binding DisconnectCommand}"
+                IsEnabled="{Binding Connected}"></Button>
+
+        </Grid>
+
+    </Grid>
+
+</Window>
